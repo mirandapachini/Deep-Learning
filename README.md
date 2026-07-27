@@ -1,1 +1,234 @@
 # Deep-Learning
+
+A collection of deep learning projects focused on medical imaging and neural networks, particularly chest X-ray analysis using the NIH ChestXray14 dataset.
+
+## 📋 Project Overview
+
+This repository contains multiple deep learning projects:
+
+### 1. **NIH ChestXray14 AI Detector** (`nih-chest-xray-ai-detector/`)
+A comprehensive deep learning application for detecting and classifying abnormalities in chest X-ray images using the NIH ChestXray14 dataset.
+
+**Key Features:**
+- Multi-class pathology detection (14 different chest conditions)
+- Pre-trained Keras model for chest X-ray analysis
+- GradCAM visualization for model interpretability
+- Support for batch predictions and single image analysis
+- Comprehensive logging and performance tracking
+- Configured for Databricks Apps deployment
+
+**Tech Stack:**
+- TensorFlow/Keras for deep learning
+- Streamlit for web interface
+- Pandas for data handling
+- Matplotlib & Seaborn for visualization
+- SciPy for image processing
+
+### 2. **Streamlit App (Temporary)** (`streamlit_app_temp/`)
+An alternative or development version of the NIH ChestXray14 detector with Streamlit interface.
+
+**Features:**
+- Interactive web application using Streamlit
+- Model inference on chest X-ray images
+- Performance monitoring and logging
+- Test images included for demo purposes
+
+### 3. **Chest X-ray App** (`chest-xray-app/`)
+Additional resources and configurations for chest X-ray analysis applications.
+
+### 4. **MNIST Neural Network with Hidden Layers**
+HTML documentation and implementation details for a neural network with hidden layers trained on the MNIST dataset.
+
+### 5. **NIH ChestXray14 Full-Scale Training**
+Documentation and training procedures for the full-scale NIH ChestXray14 model.
+
+### 6. **NIH ChestXray14 Project Documentation**
+Comprehensive documentation for the ChestXray14 project.
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Python 3.7+
+- pip or conda package manager
+- TensorFlow/Keras
+- Streamlit
+
+### Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/mirandapachini/Deep-Learning.git
+   cd Deep-Learning
+   ```
+
+2. **Install dependencies for NIH ChestXray14 detector:**
+   ```bash
+   cd nih-chest-xray-ai-detector
+   pip install -r requirements.txt
+   ```
+
+3. **Required files:**
+   - `cxr14_inference_model.keras` - Pre-trained model weights
+   - `cxr14_classes.json` - Class labels for 14 chest pathologies
+   - `cxr14_last_conv_layer.txt` - Configuration for GradCAM visualization
+
+## 🏃 Running the Applications
+
+### NIH ChestXray14 AI Detector (Streamlit)
+
+**Local Development:**
+```bash
+cd nih-chest-xray-ai-detector
+streamlit run app.py
+```
+
+The application will be available at `http://localhost:8501`
+
+**Features:**
+- Upload chest X-ray images (JPG, PNG)
+- Get predictions for 14 different pathologies
+- View confidence scores
+- GradCAM visualizations to understand model predictions
+- Prediction history and logging
+
+### Streamlit App (Temporary)
+```bash
+cd streamlit_app_temp
+streamlit run app.py
+```
+
+## 📊 Model Information
+
+### NIH ChestXray14 Model
+- **Input size:** 224×224 pixels
+- **Output:** Multi-label classification for 14 chest conditions
+- **Training data:** NIH ChestXray14 dataset
+- **Framework:** TensorFlow/Keras
+
+### Supported Pathologies
+The model can detect the following conditions:
+1. Atelectasis
+2. Cardiomegaly
+3. Effusion
+4. Infiltration
+5. Mass
+6. Nodule
+7. Pneumonia
+8. Pneumothorax
+9. Consolidation
+10. Edema
+11. Emphysema
+12. Fibrosis
+13. Pleural_Thickening
+14. Hernia
+
+## 📁 Project Structure
+
+```
+Deep-Learning/
+├── README.md
+├── index.html
+├── MNIST Neural Network with Hidden Layers.html
+├── NIH ChestXray14 Full-Scale Training.html
+├── NIH ChestXray14 Project Documentation.html
+├── nih-chest-xray-ai-detector/
+│   ├── app.py
+│   ├── requirements.txt
+│   ├── cxr14_classes.json
+│   ├── cxr14_inference_model.keras
+│   ├── cxr14_last_conv_layer.txt
+│   ├── test_images/
+│   ├── backups/
+│   └── .streamlit/
+├── streamlit_app_temp/
+│   ├── app.py
+│   ├── cxr14_classes.json
+│   ├── cxr14_inference_model.keras
+│   └── requirements.txt
+└── chest-xray-app/
+```
+
+## 📝 Documentation
+
+- **NIH ChestXray14 Project Documentation.html** - Complete project documentation
+- **NIH ChestXray14 Full-Scale Training.html** - Training procedures and methodology
+- **MNIST Neural Network with Hidden Layers.html** - Neural network architecture details
+- **GRADCAM_FIX_README.md** - GradCAM implementation notes
+- **THRESHOLD_TUNING_INTEGRATION.md** - Threshold optimization documentation
+
+## 🔧 Configuration
+
+### Model Paths
+Models can be configured to load from different sources:
+- Local file system
+- Databricks Unity Catalog Volumes
+- Cloud storage (AWS S3, Azure Blob Storage, etc.)
+
+### Logging
+The application maintains several logs:
+- `cxr14_predictions_log.csv` - Prediction history
+- `cxr14_error_log.csv` - Error tracking
+- `cxr14_usage_log.csv` - Usage statistics
+- `cxr14_performance_log.csv` - Performance metrics
+- `cxr14_feedback_log.csv` - User feedback
+
+## 🔬 Technical Details
+
+### Image Processing
+- Input images are preprocessed to 224×224 pixels
+- Normalization applied for model input
+- Support for JPG and PNG formats
+
+### Model Output
+- Confidence scores (0-1) for each pathology class
+- GradCAM heatmaps for model interpretability
+- Prediction uncertainty estimates
+
+### Performance Monitoring
+- Inference time tracking
+- Model performance metrics
+- Usage statistics and analytics
+
+## 🐛 Troubleshooting
+
+### Model Not Loading
+- Ensure model file path is correct
+- Check file permissions
+- Verify model file integrity
+
+### Streamlit Connection Issues
+- Verify Streamlit is installed: `pip install streamlit`
+- Check port 8501 is available
+- Restart Streamlit if making configuration changes
+
+### Image Upload Errors
+- Supported formats: JPG, PNG
+- Recommended size: 224×224 pixels
+- Maximum file size: Check Streamlit configuration
+
+## 📚 Resources
+
+- [NIH ChestXray14 Dataset](https://nihcc.app.box.com/v/ChestXray-NIHCC)
+- [TensorFlow/Keras Documentation](https://www.tensorflow.org/guide)
+- [Streamlit Documentation](https://docs.streamlit.io/)
+- [GradCAM Paper](https://arxiv.org/abs/1610.02055)
+
+## 👤 Author
+
+Miranda Pachini
+
+## 📄 License
+
+This project is part of a deep learning research initiative.
+
+## 🤝 Contributing
+
+For improvements and contributions, please follow the standard Git workflow:
+1. Create a feature branch
+2. Commit your changes
+3. Push to the branch
+4. Create a pull request
+
+## 📞 Support
+
+For issues, questions, or suggestions, please open an issue on the GitHub repository.
