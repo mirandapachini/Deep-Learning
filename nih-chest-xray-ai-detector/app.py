@@ -21,16 +21,22 @@ import time
 st.set_page_config(page_title="NIH ChestXray14 AI Detector", page_icon="🫁", layout="wide")
 
 
-# Config - UPDATED FOR DATABRICKS APPS
-MODEL_PATH = "/Volumes/workspace/default/chest_xray_images/cxr14_inference_model.keras"
-CLASSES_PATH = "cxr14_classes.json"
-LAST_CONV_PATH = "cxr14_last_conv_layer.txt"
+# Config - supports both local runs and Databricks Apps deployment
+APP_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(APP_DIR)
+DATABRICKS_VOLUME_MODEL_PATH = "/Volumes/workspace/default/chest_xray_images/cxr14_inference_model.keras"
+LOCAL_MODEL_PATHS = [
+    os.path.join(PROJECT_ROOT, "cxr14_inference_model.keras"),
+    os.path.join(APP_DIR, "cxr14_inference_model.keras"),
+]
+CLASSES_PATH = os.path.join(APP_DIR, "cxr14_classes.json")
+LAST_CONV_PATH = os.path.join(APP_DIR, "cxr14_last_conv_layer.txt")
 IMG_SIZE = (224, 224)
-LOG_PATH = "cxr14_predictions_log.csv"
-ERROR_LOG_PATH = "cxr14_error_log.csv"
-USAGE_LOG_PATH = "cxr14_usage_log.csv"
-PERFORMANCE_LOG_PATH = "cxr14_performance_log.csv"
-FEEDBACK_LOG_PATH = "cxr14_feedback_log.csv"
+LOG_PATH = os.path.join(APP_DIR, "cxr14_predictions_log.csv")
+ERROR_LOG_PATH = os.path.join(APP_DIR, "cxr14_error_log.csv")
+USAGE_LOG_PATH = os.path.join(APP_DIR, "cxr14_usage_log.csv")
+PERFORMANCE_LOG_PATH = os.path.join(APP_DIR, "cxr14_performance_log.csv")
+FEEDBACK_LOG_PATH = os.path.join(APP_DIR, "cxr14_feedback_log.csv")
 
 # F1-Optimized Thresholds Per Condition (Tuned for Clinical Performance)
 # Emergency conditions (Pneumothorax) favor sensitivity (lower threshold)
@@ -115,38 +121,49 @@ def log_prediction(image_name, predictions, threshold, colormap, session_id=None
 
 @st.cache_resource
 def load_model_and_classes():
-    """Load model using REQUIRED API-based approach (Volume→API→/tmp/→load)."""
+    """Load the model from a local project file when available, otherwise use the Databricks volume download path."""
     try:
-        temp_model_path = "/tmp/cxr14_inference_model.keras"
-        
-        # MANDATORY: Download model from volume using Databricks SDK API
-        if not os.path.exists(temp_model_path):
-            st.info("Downloading model from Unity Catalog Volume (~19MB, one-time)...")
-            try:
-                from databricks.sdk import WorkspaceClient
-                w = WorkspaceClient()
-                
-                # Download file from volume via Files API
-                volume_file_path = "/Volumes/workspace/default/chest_xray_images/cxr14_inference_model.keras"
-                with w.files.download(volume_file_path).contents as f:
-                    content = f.read()
-                
-                # Write to /tmp/
-                with open(temp_model_path, 'wb') as f:
-                    f.write(content)
-                
-                st.success("Model downloaded successfully!")
-            except Exception as download_error:
-                st.error(f"Failed to download model: {download_error}")
-                raise
-        
-        # Load model from local temp path
-        model = keras.models.load_model(temp_model_path)
-        with open(CLASSES_PATH, "r") as f: classes = json.load(f)
+        resolved_model_path = None
+        for candidate in LOCAL_MODEL_PATHS:
+            if os.path.exists(candidate) and os.path.isfile(candidate):
+                resolved_model_path = candidate
+                break
+
+        if resolved_model_path is not None:
+            st.info("Loading model from local project file...")
+            model = keras.models.load_model(resolved_model_path)
+            model_source = resolved_model_path
+        else:
+            temp_model_path = "/tmp/cxr14_inference_model.keras"
+
+            # Fallback for Databricks Apps / Unity Catalog Volume
+            if not os.path.exists(temp_model_path):
+                st.info("Downloading model from Unity Catalog Volume (~19MB, one-time)...")
+                try:
+                    from databricks.sdk import WorkspaceClient
+                    w = WorkspaceClient()
+
+                    with w.files.download(DATABRICKS_VOLUME_MODEL_PATH).contents as f:
+                        content = f.read()
+
+                    with open(temp_model_path, 'wb') as f:
+                        f.write(content)
+
+                    st.success("Model downloaded successfully!")
+                except Exception as download_error:
+                    st.error(f"Failed to download model: {download_error}")
+                    raise
+
+            model = keras.models.load_model(temp_model_path)
+            model_source = temp_model_path
+
+        with open(CLASSES_PATH, "r") as f:
+            classes = json.load(f)
         last_conv = None
         if os.path.exists(LAST_CONV_PATH):
-            with open(LAST_CONV_PATH, "r") as f: last_conv = f.read().strip()
-        log_usage("model_loaded", f"Model loaded from {temp_model_path}", session_id="system")
+            with open(LAST_CONV_PATH, "r") as f:
+                last_conv = f.read().strip()
+        log_usage("model_loaded", f"Model loaded from {model_source}", session_id="system")
         return model, classes, last_conv
     except Exception as e:
         log_error("ModelLoadError", str(e), "Failed to load model on startup")

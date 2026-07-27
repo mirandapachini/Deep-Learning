@@ -9,13 +9,15 @@ This repository contains multiple deep learning projects:
 ### 1. **NIH ChestXray14 AI Detector** (`nih-chest-xray-ai-detector/`)
 A comprehensive deep learning application for detecting and classifying abnormalities in chest X-ray images using the NIH ChestXray14 dataset.
 
+This project was developed and iterated in Databricks, using Databricks Apps patterns and Unity Catalog Volume storage for the trained model artifacts. The app has also been updated to resolve the model and configuration files from the local workspace first, so it can run locally while still supporting the Databricks deployment path.
+
 **Key Features:**
 - Multi-class pathology detection (14 different chest conditions)
 - Pre-trained Keras model for chest X-ray analysis
 - GradCAM visualization for model interpretability
 - Support for batch predictions and single image analysis
 - Comprehensive logging and performance tracking
-- Configured for Databricks Apps deployment
+- Built and deployed using Databricks Apps
 
 **Tech Stack:**
 - TensorFlow/Keras for deep learning
@@ -23,26 +25,18 @@ A comprehensive deep learning application for detecting and classifying abnormal
 - Pandas for data handling
 - Matplotlib & Seaborn for visualization
 - SciPy for image processing
+- Databricks for development and deployment
 
-### 2. **Streamlit App (Temporary)** (`streamlit_app_temp/`)
-An alternative or development version of the NIH ChestXray14 detector with Streamlit interface.
+### 2. **Notebook & Documentation Assets** (`notebooks/` and `docs/`)
+Supporting notebooks and project documentation for the training workflow, project write-up, and related analysis.
 
-**Features:**
-- Interactive web application using Streamlit
-- Model inference on chest X-ray images
-- Performance monitoring and logging
-- Test images included for demo purposes
-
-### 3. **Chest X-ray App** (`chest-xray-app/`)
-Additional resources and configurations for chest X-ray analysis applications.
-
-### 4. **MNIST Neural Network with Hidden Layers**
+### 3. **MNIST Neural Network with Hidden Layers**
 HTML documentation and implementation details for a neural network with hidden layers trained on the MNIST dataset.
 
-### 5. **NIH ChestXray14 Full-Scale Training**
+### 4. **NIH ChestXray14 Full-Scale Training**
 Documentation and training procedures for the full-scale NIH ChestXray14 model.
 
-### 6. **NIH ChestXray14 Project Documentation**
+### 5. **NIH ChestXray14 Project Documentation**
 Comprehensive documentation for the ChestXray14 project.
 
 ## 🚀 Getting Started
@@ -68,9 +62,9 @@ Comprehensive documentation for the ChestXray14 project.
    ```
 
 3. **Required files:**
-   - `cxr14_inference_model.keras` - Pre-trained model weights
-   - `cxr14_classes.json` - Class labels for 14 chest pathologies
-   - `cxr14_last_conv_layer.txt` - Configuration for GradCAM visualization
+   - `nih-chest-xray-ai-detector/cxr14_inference_model.keras` - Pre-trained model weights
+   - `nih-chest-xray-ai-detector/cxr14_classes.json` - Class labels for 14 chest pathologies
+   - `nih-chest-xray-ai-detector/cxr14_last_conv_layer.txt` - Configuration for GradCAM visualization
 
 ## 🏃 Running the Applications
 
@@ -91,11 +85,8 @@ The application will be available at `http://localhost:8501`
 - GradCAM visualizations to understand model predictions
 - Prediction history and logging
 
-### Streamlit App (Temporary)
-```bash
-cd streamlit_app_temp
-streamlit run app.py
-```
+### Notebook and Documentation Files
+The notebooks and project documents are now organized under the `notebooks/` and `docs/` folders for easier navigation.
 
 ## 📊 Model Information
 
@@ -127,34 +118,34 @@ The model can detect the following conditions:
 ```
 Deep-Learning/
 ├── README.md
-├── index.html
-├── MNIST Neural Network with Hidden Layers.html
-├── NIH ChestXray14 Full-Scale Training.html
-├── NIH ChestXray14 Project Documentation.html
 ├── nih-chest-xray-ai-detector/
 │   ├── app.py
+│   ├── app.yaml
 │   ├── requirements.txt
 │   ├── cxr14_classes.json
 │   ├── cxr14_inference_model.keras
 │   ├── cxr14_last_conv_layer.txt
 │   ├── test_images/
-│   ├── backups/
 │   └── .streamlit/
-├── streamlit_app_temp/
-│   ├── app.py
-│   ├── cxr14_classes.json
-│   ├── cxr14_inference_model.keras
-│   └── requirements.txt
-└── chest-xray-app/
+├── notebooks/
+│   ├── MNIST Neural Network with Hidden Layers.ipynb
+│   ├── MNIST Neural Network with Hidden Layers.html
+│   ├── NIH ChestXray14 Full-Scale Training (1).ipynb
+│   ├── NIH ChestXray14 Full-Scale Training.html
+│   ├── NIH ChestXray14 Project Documentation (1).ipynb
+│   └── NIH ChestXray14 Project Documentation.html
+└── docs/
+    └── DEPLOYMENT_GUIDE_Random_Gallery.md
 ```
 
 ## 📝 Documentation
 
-- **NIH ChestXray14 Project Documentation.html** - Complete project documentation
-- **NIH ChestXray14 Full-Scale Training.html** - Training procedures and methodology
-- **MNIST Neural Network with Hidden Layers.html** - Neural network architecture details
-- **GRADCAM_FIX_README.md** - GradCAM implementation notes
-- **THRESHOLD_TUNING_INTEGRATION.md** - Threshold optimization documentation
+- **notebooks/NIH ChestXray14 Project Documentation.html** - Complete project documentation
+- **notebooks/NIH ChestXray14 Full-Scale Training.html** - Training procedures and methodology
+- **notebooks/MNIST Neural Network with Hidden Layers.html** - Neural network architecture details
+- **nih-chest-xray-ai-detector/GRADCAM_FIX_README.md** - GradCAM implementation notes
+- **nih-chest-xray-ai-detector/THRESHOLD_TUNING_INTEGRATION.md** - Threshold optimization documentation
+- **docs/DEPLOYMENT_GUIDE_Random_Gallery.md** - Deployment guidance
 
 ## 🔧 Configuration
 
