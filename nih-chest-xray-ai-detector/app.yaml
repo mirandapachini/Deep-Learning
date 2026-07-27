@@ -1,0 +1,7 @@
+command:
+  - streamlit
+  - run
+  - app.py
+env:
+  - name: MODEL_VOLUME_PATH
+    value: /Volumes/workspace/default/chest_xray_images

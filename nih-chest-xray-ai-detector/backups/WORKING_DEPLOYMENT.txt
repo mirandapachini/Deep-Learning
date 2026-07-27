@@ -1,0 +1,19 @@
+🔒 WORKING DEPLOYMENT - DO NOT MODIFY
+=====================================
+
+Deployment ID: 01f1687483151d0e965dcd788f036a2e
+Deployed: 2026-06-15T04:41:44Z
+Status: WORKING - Grad-CAM heatmaps generate successfully
+
+Deployed Source: /Workspace/Users/1ebebe5c-1c76-4f0e-a0e7-86aa4a875960/src/01f1687483151d0e965dcd788f036a2e
+Workspace Source: /Workspace/Users/mirandapachini@gmail.com/nih-chest-xray-ai-detector
+
+Key Fix (lines 137-180):
+- Force model graph build with model(img_array) and base_model(img_array) BEFORE accessing .inputs
+- Multiple fallback approaches for building grad_model
+- Graceful degradation with dummy heatmap if all approaches fail
+
+CRITICAL: Do not modify make_gradcam_heatmap() function without testing!
+The fix is fragile and relies on forcing Keras graph construction.
+
+App URL: https://chest-xray-diagnostic-app-7474643726694145.aws.databricksapps.com
