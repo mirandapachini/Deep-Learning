@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+var startPage = "MNIST Neural Network with Hidden Layers.html";
+const files = ["/NIH ChestXray14 Project Documentation.html","/index.html","/NIH ChestXray14 Full-Scale Training.html","/MNIST Neural Network with Hidden Layers.html"];
+if (location.hash.length > 1) {
+  const potentialStartPage = decodeURI(location.hash.trim().substring(1))
+  if (files.includes("/" + potentialStartPage)) {
+    startPage = potentialStartPage;
+  }
+}
+</script>
+<style>
+li {
+  list-style: none;
+  margin-left: -20px;
+}
+</style>
+<meta name="databricks-html-version" content="1">
+<title>Deep-Learning - Databricks</title>
+
+<meta charset="utf-8">
+<meta name="google" content="notranslate">
+<meta name="robots" content="nofollow, noindex">
+<meta http-equiv="Content-Language" content="en">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF8">
+
+<link rel="stylesheet" type="text/css" href="https://databricks-prod-cloudfront.cloud.databricks.com/static/monolith-ui_2026-07-24_09.14.34Z_master_87608649_1827774382/css/notebook-main.css">
+<link rel="icon" type="image/png" href="https://databricks-prod-cloudfront.cloud.databricks.com/static/monolith-ui_2026-07-24_09.14.34Z_master_87608649_1827774382/login/favicon.ico"/>
+<script>window.__STATIC_SETTINGS__ = {"sandboxForSandboxFrame":"allow-scripts allow-popups allow-popups-to-escape-sandbox allow-forms allow-same-origin allow-downloads","databricks.fe.deploymentMode":"production","deploymentMode":"production","staticNotebookResourceUrl_new":"https://databricks-prod-cloudfront.cloud.databricks.com/static/monolith-ui_2026-07-24_09.14.34Z_master_87608649_1827774382/","databricks.fe.eda.sandboxForSandboxFrame":"allow-scripts allow-popups allow-popups-to-escape-sandbox allow-forms allow-same-origin allow-downloads","enableResultsDownloading":true,"disableExportNotebook":false,"enableNotebookTableClipboard":true,"enableExportNotebook":true,"staticNotebookResourceUrl":"https://databricks-prod-cloudfront.cloud.databricks.com/static/monolith-ui_2026-07-24_09.14.34Z_master_87608649_1827774382/","disableResultsDownloading":true};</script>
+<script>var __DATABRICKS_NOTEBOOK_MODEL = 'JTdCJTIydmVyc2lvbiUyMiUzQSUyMk5vdGVib29rVjElMjIlMkMlMjJvcmlnSWQlMjIlM0EwJTJDJTIybmFtZSUyMiUzQSUyMkRlZXAtTGVhcm5pbmclMjIlMkMlMjJsYW5ndWFnZSUyMiUzQSUyMiUyMiUyQyUyMmNvbW1hbmRzJTIyJTNBJTVCJTdCJTIydmVyc2lvbiUyMiUzQSUyMkNvbW1hbmRWMSUyMiUyQyUyMm9yaWdJZCUyMiUzQTAlMkMlMjJndWlkJTIyJTNBJTIyN2MzZGE5MGMtN2Y0MS00MDQwLWFhMmEtYzY0ZGZjZDhiNjUxJTIyJTJDJTIyc3VidHlwZSUyMiUzQSUyMmNvbW1hbmQlMjIlMkMlMjJjb21tYW5kVHlwZSUyMiUzQSUyMmF1dG8lMjIlMkMlMjJwb3NpdGlvbiUyMiUzQTAuMCUyQyUyMmNvbW1hbmQlMjIlM0ElMjIlMjVtZCUyMCUyMyUyMyUyMyUyMyUyMCUzQ2ElMjBocmVmJTNEJTVDJTIyTU5JU1QlMjUyME5ldXJhbCUyNTIwTmV0d29yayUyNTIwd2l0aCUyNTIwSGlkZGVuJTI1MjBMYXllcnMuaHRtbCU1QyUyMiUzRU1OSVNUJTIwTmV1cmFsJTIwTmV0d29yayUyMHdpdGglMjBIaWRkZW4lMjBMYXllcnMlM0MlMkZhJTNFJTVDbiUyMyUyMyUyMyUyMyUyMCUzQ2ElMjBocmVmJTNEJTVDJTIyTklIJTI1MjBDaGVzdFhyYXkxNCUyNTIwRnVsbC1TY2FsZSUyNTIwVHJhaW5pbmcuaHRtbCU1QyUyMiUzRU5JSCUyMENoZXN0WHJheTE0JTIwRnVsbC1TY2FsZSUyMFRyYWluaW5nJTNDJTJGYSUzRSU1Q24lMjMlMjMlMjMlMjMlMjAlM0NhJTIwaHJlZiUzRCU1QyUyMk5JSCUyNTIwQ2hlc3RYcmF5MTQlMjUyMFByb2plY3QlMjUyMERvY3VtZW50YXRpb24uaHRtbCU1QyUyMiUzRU5JSCUyMENoZXN0WHJheTE0JTIwUHJvamVjdCUyMERvY3VtZW50YXRpb24lM0MlMkZhJTNFJTVDbiUyMyUyMyUyMyUyMyUyMCUzQ2ElMjBocmVmJTNEJTVDJTIyaW5kZXguaHRtbCU1QyUyMiUzRWluZGV4JTNDJTJGYSUzRSUyMiUyQyUyMmNvbW1hbmRWZXJzaW9uJTIyJTNBMSUyQyUyMnN0YXRlJTIyJTNBJTIyZmluaXNoZWQlMjIlMkMlMjJyZXN1bHRzJTIyJTNBbnVsbCUyQyUyMnJlc3VsdERiZnNTdGF0dXMlMjIlM0FudWxsJTJDJTIycmVzdWx0RGJmc0Vycm9yTWVzc2FnZSUyMiUzQW51bGwlMkMlMjJlcnJvclN1bW1hcnklMjIlM0FudWxsJTJDJTIyZXJyb3JUcmFjZVR5cGUlMjIlM0FudWxsJTJDJTIyZXJyb3IlMjIlM0FudWxsJTJDJTIyZXJyb3JEZXRhaWxzJTIyJTNBbnVsbCUyQyUyMmJhc2VFcnJvckRldGFpbHMlMjIlM0FudWxsJTJDJTIyd29ya2Zsb3dzJTIyJTNBJTVCJTVEJTJDJTIyc3RhcnRUaW1lJTIyJTNBMCUyQyUyMnN1Ym1pdFRpbWUlMjIlM0EwJTJDJTIyZmluaXNoVGltZSUyMiUzQTAlMkMlMjJjb2xsYXBzZWQlMjIlM0FmYWxzZSUyQyUyMmJpbmRpbmdzJTIyJTNBJTdCJTdEJTJDJTIyaW5wdXRXaWRnZXRzJTIyJTNBJTdCJTdEJTJDJTIyZGlzcGxheVR5cGUlMjIlM0ElMjJ0YWJsZSUyMiUyQyUyMndpZHRoJTIyJTNBJTIyYXV0byUyMiUyQyUyMmhlaWdodCUyMiUzQSUyMmF1dG8lMjIlMkMlMjJ4Q29sdW1ucyUyMiUzQW51bGwlMkMlMjJ5Q29sdW1ucyUyMiUzQW51bGwlMkMlMjJwaXZvdENvbHVtbnMlMjIlM0FudWxsJTJDJTIycGl2b3RBZ2dyZWdhdGlvbiUyMiUzQW51bGwlMkMlMjJ1c2VDb25zaXN0ZW50Q29sb3JzJTIyJTNBZmFsc2UlMkMlMjJjdXN0b21QbG90T3B0aW9ucyUyMiUzQSU3QiU3RCUyQyUyMmNvbW1lbnRUaHJlYWQlMjIlM0ElNUIlNUQlMkMlMjJjb21tZW50c1Zpc2libGUlMjIlM0FmYWxzZSUyQyUyMnBhcmVudEhpZXJhcmNoeSUyMiUzQSU1QiU1RCUyQyUyMmRpZmZJbnNlcnRzJTIyJTNBJTVCJTVEJTJDJTIyZGlmZkRlbGV0ZXMlMjIlM0ElNUIlNUQlMkMlMjJnbG9iYWxWYXJzJTIyJTNBJTdCJTdEJTJDJTIybGF0ZXN0VXNlciUyMiUzQSUyMmElMjB1c2VyJTIyJTJDJTIybGF0ZXN0VXNlcklkJTIyJTNBbnVsbCUyQyUyMmxhdGVzdEFzc3VtZVJvbGVJbmZvJTIyJTNBbnVsbCUyQyUyMmNvbW1hbmRUaXRsZSUyMiUzQSUyMiUyMiUyQyUyMnNob3dDb21tYW5kVGl0bGUlMjIlM0FmYWxzZSUyQyUyMmhpZGVDb21tYW5kQ29kZSUyMiUzQWZhbHNlJTJDJTIyaGlkZUNvbW1hbmRSZXN1bHQlMjIlM0FmYWxzZSUyQyUyMmlzTG9ja2VkSW5FeGFtTW9kZSUyMiUzQWZhbHNlJTJDJTIyaVB5dGhvbk1ldGFkYXRhJTIyJTNBbnVsbCUyQyUyMm1ldGFkYXRhJTIyJTNBJTdCJTdEJTJDJTIyc3RyZWFtU3RhdGVzJTIyJTNBJTdCJTdEJTJDJTIyZGF0YXNldFByZXZpZXdOYW1lVG9DbWRJZE1hcCUyMiUzQSU3QiU3RCUyQyUyMnRhYmxlUmVzdWx0SW5kZXglMjIlM0FudWxsJTJDJTIybGlzdFJlc3VsdE1ldGFkYXRhJTIyJTNBJTVCJTVEJTJDJTIyc3ViY29tbWFuZE9wdGlvbnMlMjIlM0FudWxsJTJDJTIyY29udGVudFNoYTI1NkhleCUyMiUzQW51bGwlMkMlMjJ0YWJsZVJlc3VsdFNldHRpbmdzTWFwJTIyJTNBJTdCJTdEJTJDJTIybnVpZCUyMiUzQSUyMmM2YTAzMTIyLWQxZDctNDI3My1hNjlhLWZjNGQ4OTRiZjZmMCUyMiU3RCU1RCUyQyUyMmRhc2hib2FyZHMlMjIlM0ElNUIlNUQlMkMlMjJndWlkJTIyJTNBJTIyJTIyJTJDJTIyZ2xvYmFsVmFycyUyMiUzQSU3QiU3RCUyQyUyMmlQeXRob25NZXRhZGF0YSUyMiUzQW51bGwlMkMlMjJpbnB1dFdpZGdldHMlMjIlM0ElN0IlN0QlMkMlMjJub3RlYm9va01ldGFkYXRhJTIyJTNBJTdCJTdEJTJDJTIycmVwb3NFeHBvcnRGb3JtYXQlMjIlM0ElMjJTT1VSQ0UlMjIlMkMlMjJlbnZpcm9ubWVudE1ldGFkYXRhJTIyJTNBbnVsbCUyQyUyMmNvbXB1dGVQcmVmZXJlbmNlcyUyMiUzQW51bGwlMkMlMjJpbnB1dFdpZGdldFByZWZlcmVuY2VzJTIyJTNBbnVsbCUyQyUyMmVudmlyb25tZW50U2VyaWFsaXphdGlvblByZWZlcmVuY2VzJTIyJTNBbnVsbCU3RA==';</script>
+
+</head>
+<body>  <script>
+window.addEventListener('load', function(event) {
+  if (window.mainJsLoadError) {
+    var u = 'https://databricks-prod-cloudfront.cloud.databricks.com/static/monolith-ui_2026-07-24_09.14.34Z_master_87608649_1827774382/js/notebook-main.js';
+    var b = document.getElementsByTagName('body')[0];
+    var c = document.createElement('div');
+    c.innerHTML = ('<h1 class="error-static-notebook">Network Error</h1>' +
+      '<p><b>Please check your network connection and try again.</b></p>' +
+      '<p>Could not load a required resource: ' + u + '</p>');
+    c.style.margin = '30px';
+    c.style.padding = '20px 50px';
+    c.style.backgroundColor = '#f5f5f5';
+    c.style.borderRadius = '5px';
+    b.appendChild(c);
+  }
+});
+</script>
+<script
+ src="https://databricks-prod-cloudfront.cloud.databricks.com/static/monolith-ui_2026-07-24_09.14.34Z_master_87608649_1827774382/js/notebook-main.js"
+ onerror="window.mainJsLoadError = true;"
+ charset="utf-8"></script>
+<script
+ src="https://databricks-prod-cloudfront.cloud.databricks.com/static/monolith-ui_2026-07-24_09.14.34Z_master_87608649_1827774382/js/metrics-graphics.js"
+ onerror="window.mainJsLoadError = true;"
+ charset="utf-8"></script>
+</body>
+</html>
