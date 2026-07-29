@@ -219,7 +219,9 @@ This project is part of a deep learning research initiative.
 
 ## 🤝 Contributing
 
-For improvements and contributions, please follow the standard Git workflow:
+Only collaborators are allowed to make changes to this repository.
+
+For approved collaborators, please follow the standard Git workflow:
 1. Create a feature branch
 2. Commit your changes
 3. Push to the branch
