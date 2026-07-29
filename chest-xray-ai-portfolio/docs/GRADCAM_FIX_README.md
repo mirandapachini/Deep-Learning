@@ -66,7 +66,7 @@ Key changes:
 
 Working code backups stored in:
 ```
-/Workspace/Users/mirandapachini@gmail.com/nih-chest-xray-ai-detector/backups/
+/Workspace/Users/mirandapachini@gmail.com/chest-xray-ai-portfolio/backups/
 ```
 
 Files:

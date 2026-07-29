@@ -18,19 +18,20 @@ import time
 
 
 # PAGE CONFIG - Must be first Streamlit command
-st.set_page_config(page_title="NIH ChestXray14 AI Detector", page_icon="🫁", layout="wide")
+st.set_page_config(page_title="Chest X-ray AI Portfolio Project", page_icon="🫁", layout="wide")
 
 
 # Config - supports both local runs and Databricks Apps deployment
 APP_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(APP_DIR)
+DATA_DIR = os.path.join(APP_DIR, "data")
 DATABRICKS_VOLUME_MODEL_PATH = "/Volumes/workspace/default/chest_xray_images/cxr14_inference_model.keras"
 LOCAL_MODEL_PATHS = [
-    os.path.join(PROJECT_ROOT, "cxr14_inference_model.keras"),
+    os.path.join(DATA_DIR, "cxr14_inference_model.keras"),
     os.path.join(APP_DIR, "cxr14_inference_model.keras"),
 ]
-CLASSES_PATH = os.path.join(APP_DIR, "cxr14_classes.json")
-LAST_CONV_PATH = os.path.join(APP_DIR, "cxr14_last_conv_layer.txt")
+CLASSES_PATH = os.path.join(DATA_DIR, "cxr14_classes.json")
+LAST_CONV_PATH = os.path.join(DATA_DIR, "cxr14_last_conv_layer.txt")
 IMG_SIZE = (224, 224)
 LOG_PATH = os.path.join(APP_DIR, "cxr14_predictions_log.csv")
 ERROR_LOG_PATH = os.path.join(APP_DIR, "cxr14_error_log.csv")
@@ -335,7 +336,7 @@ with tab1:
             
             # Initialize random gallery once per session
             if 'demo_images_shuffled' not in st.session_state:
-                all_demo_images = glob.glob("test_images/*.png")
+                all_demo_images = glob.glob(os.path.join(DATA_DIR, "test_images", "*.png"))
                 if all_demo_images:
                     random.shuffle(all_demo_images)
                     st.session_state.demo_images_shuffled = all_demo_images
@@ -350,7 +351,7 @@ with tab1:
                         st.image(img_path, use_column_width=True)
                         st.caption(f"Demo {idx+1}")
             else:
-                st.info("No demo images found in test_images/ folder.")
+                st.info("No demo images found in data/test_images/ folder.")
         except:
             st.info("Demo images will appear here once added to test_images/ folder.")
 

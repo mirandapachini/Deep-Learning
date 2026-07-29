@@ -6,8 +6,8 @@ A collection of deep learning projects focused on medical imaging and neural net
 
 This repository contains multiple deep learning projects:
 
-### 1. **NIH ChestXray14 AI Detector** (`nih-chest-xray-ai-detector/`)
-A comprehensive deep learning application for detecting and classifying abnormalities in chest X-ray images using the NIH ChestXray14 dataset.
+### 1. **Chest X-ray AI Portfolio Project** (`chest-xray-ai-portfolio/`)
+A polished employer-facing deep learning application demonstrating chest X-ray abnormality detection and multi-label classification using the NIH ChestXray14 dataset.
 
 This project was developed and iterated in Databricks, using Databricks Apps patterns and Unity Catalog Volume storage for the trained model artifacts. The app has also been updated to resolve the model and configuration files from the local workspace first, so it can run locally while still supporting the Databricks deployment path.
 
@@ -55,24 +55,24 @@ Comprehensive documentation for the ChestXray14 project.
    cd Deep-Learning
    ```
 
-2. **Install dependencies for NIH ChestXray14 detector:**
+2. **Install dependencies for the Chest X-ray AI portfolio app:**
    ```bash
-   cd nih-chest-xray-ai-detector
+   cd chest-xray-ai-portfolio
    pip install -r requirements.txt
    ```
 
 3. **Required files:**
-   - `nih-chest-xray-ai-detector/cxr14_inference_model.keras` - Pre-trained model weights
-   - `nih-chest-xray-ai-detector/cxr14_classes.json` - Class labels for 14 chest pathologies
-   - `nih-chest-xray-ai-detector/cxr14_last_conv_layer.txt` - Configuration for GradCAM visualization
+   - `chest-xray-ai-portfolio/data/cxr14_inference_model.keras` - Pre-trained model weights
+   - `chest-xray-ai-portfolio/data/cxr14_classes.json` - Class labels for 14 chest pathologies
+   - `chest-xray-ai-portfolio/data/cxr14_last_conv_layer.txt` - Configuration for GradCAM visualization
 
 ## 🏃 Running the Applications
 
-### NIH ChestXray14 AI Detector (Streamlit)
+### Chest X-ray AI Portfolio Project (Streamlit)
 
 **Local Development:**
 ```bash
-cd nih-chest-xray-ai-detector
+cd chest-xray-ai-portfolio
 streamlit run app.py
 ```
 
@@ -118,14 +118,19 @@ The model can detect the following conditions:
 ```
 Deep-Learning/
 ├── README.md
-├── nih-chest-xray-ai-detector/
+├── chest-xray-ai-portfolio/
 │   ├── app.py
 │   ├── app.yaml
 │   ├── requirements.txt
-│   ├── cxr14_classes.json
-│   ├── cxr14_inference_model.keras
-│   ├── cxr14_last_conv_layer.txt
-│   ├── test_images/
+│   ├── data/
+│   │   ├── cxr14_classes.json
+│   │   ├── cxr14_inference_model.keras
+│   │   ├── cxr14_last_conv_layer.txt
+│   │   ├── test_catalog.csv
+│   │   └── test_images/
+│   ├── docs/
+│   │   ├── GRADCAM_FIX_README.md
+│   │   └── THRESHOLD_TUNING_INTEGRATION.md
 │   └── .streamlit/
 ├── notebooks/
 │   ├── MNIST Neural Network with Hidden Layers.ipynb
@@ -143,8 +148,8 @@ Deep-Learning/
 - **notebooks/NIH ChestXray14 Project Documentation.html** - Complete project documentation
 - **notebooks/NIH ChestXray14 Full-Scale Training.html** - Training procedures and methodology
 - **notebooks/MNIST Neural Network with Hidden Layers.html** - Neural network architecture details
-- **nih-chest-xray-ai-detector/GRADCAM_FIX_README.md** - GradCAM implementation notes
-- **nih-chest-xray-ai-detector/THRESHOLD_TUNING_INTEGRATION.md** - Threshold optimization documentation
+- **chest-xray-ai-portfolio/docs/GRADCAM_FIX_README.md** - GradCAM implementation notes
+- **chest-xray-ai-portfolio/docs/THRESHOLD_TUNING_INTEGRATION.md** - Threshold optimization documentation
 - **docs/DEPLOYMENT_GUIDE_Random_Gallery.md** - Deployment guidance
 
 ## 🔧 Configuration

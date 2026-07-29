@@ -49,7 +49,7 @@ Restart app → NEW random 10 images!
 
 ### Step 2: Deploy
 1. Go to Databricks Apps page
-2. Click "Deploy" on nih-chest-xray-ai-detector
+2. Click "Deploy" on chest-xray-ai-portfolio
 3. Wait for RUNNING status
 
 ### Step 3: Test
@@ -261,7 +261,7 @@ if 'selected_test_images' not in st.session_state:
 
 ---
 
-**🌐 App URL:** https://nih-chest-xray-ai-detector-7474643726694145.aws.databricksapps.com
+**🌐 App URL:** https://chest-xray-ai-portfolio-7474643726694145.aws.databricksapps.com
 
 **🚀 Status:** Ready for deployment!
 

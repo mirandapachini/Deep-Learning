@@ -42,7 +42,7 @@ TUNED_THRESHOLDS = {
 
 ## ✅ Component 1: Streamlit App
 
-**File:** `/Workspace/Users/mirandapachini@gmail.com/nih-chest-xray-ai-detector/app.py`  
+**File:** `/Workspace/Users/mirandapachini@gmail.com/chest-xray-ai-portfolio/app.py`
 **Status:** ✅ **DEPLOYED & LIVE**
 
 ### Changes Made:
