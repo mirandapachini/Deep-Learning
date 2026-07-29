@@ -1,0 +1,42 @@
+name: Smoke Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r chest-xray-ai-portfolio/requirements.txt
+      - name: Quick imports smoke test
+        run: |
+          python - <<'PY'
+          import sys
+          modules = ['streamlit','tensorflow','PIL','numpy','pandas','matplotlib','scipy','seaborn']
+          missing = []
+          for m in modules:
+              try:
+                  __import__(m)
+              except Exception as e:
+                  print('Failed import', m, e)
+                  missing.append(m)
+          if missing:
+              print('Missing or failed imports:', missing)
+              sys.exit(2)
+          print('All core imports OK')
+          PY
+      - name: Syntax check relocated app
+        run: |
+          python -m py_compile src/chest_xray_ai_portfolio/app.py
+          python -m py_compile chest-xray-ai-portfolio/app.py
