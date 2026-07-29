@@ -1,3 +1,4 @@
+# Tested with Python 3.10 to match TensorFlow 2.11 compatibility
 streamlit==1.25.0
 tensorflow==2.11.0
 pillow==9.5.0

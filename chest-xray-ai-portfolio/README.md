@@ -3,9 +3,9 @@ Chest X-ray AI — Demo (local)
 
 This folder contains the Streamlit demo for the Chest X-ray AI portfolio project.
 
-Quick local run (recommended in a virtualenv):
+Quick local run (recommended in a Python 3.10 virtualenv):
 
-1. Install dependencies:
+1. Install dependencies with Python 3.10:
 ```bash
 cd chest-xray-ai-portfolio
 pip install -r requirements.txt

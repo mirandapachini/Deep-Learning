@@ -10,8 +10,8 @@ Highlights
 If you're reviewing this repository as a hiring manager or collaborator, start with the `chest-xray-ai-portfolio/` folder for the interactive demo and `notebooks/` for supporting analysis.
 
 Quick Start (local)
-1. Install Python 3.8+ and virtualenv/venv
-2. From repository root, install the demo dependencies:
+1. Install Python 3.10 and virtualenv/venv
+2. From repository root, install the demo dependencies with Python 3.10:
 ```
 cd chest-xray-ai-portfolio
 pip install -r requirements.txt
